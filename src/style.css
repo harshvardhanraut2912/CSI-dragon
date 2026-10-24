@@ -1,0 +1,96 @@
+:root{--ember:#ff7a1a;--blood:#b3190a;--ash:#ffd9c2}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{background:#050000;color:var(--ash);font-family:Rajdhani,sans-serif;font-size:1.2rem;overflow-x:hidden;cursor:none}
+a{color:inherit;text-decoration:none;cursor:none}
+canvas{position:fixed;inset:0;width:100%;height:100%}
+/* lava dimmed so the dragon stays readable (dragon canvases untouched) */
+#lava{z-index:0;opacity:.34}#fx{z-index:5;pointer-events:none}#flame{z-index:6;pointer-events:none}
+#glow{position:fixed;width:34px;height:34px;margin:-17px;border-radius:50%;z-index:9;pointer-events:none;background:radial-gradient(#fff,#ff7a1a 40%,transparent 70%);mix-blend-mode:screen;box-shadow:0 0 40px 12px #ff3b0066}
+nav{position:fixed;top:0;left:0;right:0;z-index:8;display:flex;gap:1.6rem;align-items:center;padding:1rem 2rem;background:linear-gradient(#000e,transparent);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:1rem}
+nav b{font:2rem 'Pirata One';color:#ff3d1f;margin-right:auto;letter-spacing:0;text-transform:none}nav a:hover{color:#ffb347;text-shadow:0 0 12px #ff5a00}
+main{position:relative;z-index:2}section{min-height:100vh;padding:7rem 8vw;display:flex;flex-direction:column;justify-content:center;position:relative}
+.hero{align-items:center;text-align:center}.tag{letter-spacing:.5em;color:#ff7a3d}
+h1{font:clamp(6rem,22vw,20rem)/.9 'Pirata One';background:linear-gradient(#fff3a0,#ff9d1a 35%,#e01a0a 70%,#3a0000);-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 0 30px #ff2a00aa);position:relative;animation:pulse 3s infinite}
+h1::before,h1::after{content:attr(data-t);position:absolute;inset:0;background:inherit;-webkit-background-clip:text;color:transparent;opacity:0}
+h1.glitch::before{opacity:.9;transform:translate(-8px,3px);filter:hue-rotate(40deg)}h1.glitch::after{opacity:.9;transform:translate(8px,-3px);filter:hue-rotate(-30deg)}
+@keyframes pulse{50%{filter:drop-shadow(0 0 70px #ff5a00)}}
+.sub{font-size:1.7rem;margin:1rem 0}.cd{display:flex;gap:1rem;margin:1.5rem 0}
+.cd div{background:#120403dd;border:2px solid #5a1408;padding:.6rem 1.1rem;min-width:84px;box-shadow:inset 0 0 20px #ff2a0033;clip-path:polygon(5% 0,100% 4%,96% 100%,0 94%)}.cd b{display:block;font:2.4rem 'Pirata One';color:#ff9d3d}
+.row{display:flex;gap:1.2rem;flex-wrap:wrap;justify-content:center}.hint{margin-top:2rem;opacity:.6}
+/* ---- stone buttons: flat cartoon stone tile, lava oozing over the top ---- */
+.stone{display:inline-block;padding:1.35rem 2.8rem 1rem;font:700 1.3rem Rajdhani;letter-spacing:.15em;text-transform:uppercase;color:#fff4e6;text-shadow:0 2px 0 #000,0 0 8px #000;position:relative;isolation:isolate;overflow:hidden;
+background:radial-gradient(ellipse at 28% 22%,#ffffff2b,transparent 55%),linear-gradient(145deg,#948a83,#645c57 52%,#3b3430);
+clip-path:polygon(2% 6%,14% 0,48% 3%,86% 0,100% 12%,98% 55%,100% 90%,88% 100%,52% 97%,12% 100%,0 88%,2% 48%);
+box-shadow:inset 3px 3px 0 #cfc5bcaa,inset -4px -4px 0 #0000006b,inset 0 0 0 1px #1d1816;transition:transform .25s,color .25s}
+.stone::before{content:"";position:absolute;left:0;right:0;top:0;height:48%;z-index:-1;transform-origin:top;transition:height .45s ease-out;
+background:linear-gradient(#ffe27a,#ff8a1a 35%,#d3260a 75%,#8a1004);clip-path:polygon(0 0,100% 0,100% 45%,93% 72%,87% 40%,79% 88%,69% 46%,59% 68%,49% 34%,39% 92%,29% 50%,19% 78%,9% 42%,0 62%);animation:ooze 3.2s ease-in-out infinite}
+.stone::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 61%,#1d1816 62%,transparent 63.5%),linear-gradient(68deg,transparent 80%,#1d1816 81%,transparent 82.5%)}
+.stone:hover{color:#fff;transform:scale(1.06) rotate(-1.2deg)}.stone:hover::before{height:100%}
+.stone:active{transform:scale(.94)}
+.alt{background:radial-gradient(ellipse at 28% 22%,#ffffff26,transparent 55%),linear-gradient(145deg,#a8957d,#786752 52%,#4a3e32)}
+.big{font-size:1.8rem;padding:1.8rem 4rem 1.3rem;align-self:flex-start}
+@keyframes ooze{50%{transform:scaleY(1.14)}}
+.chip{position:fixed;z-index:10;width:9px;height:9px;background:#3a2e2a;border:1px solid #ff5a1f;pointer-events:none;clip-path:polygon(0 30%,60% 0,100% 60%,40% 100%);animation:chip .8s ease-out forwards}
+@keyframes chip{to{transform:translate(var(--dx),var(--dy)) rotate(540deg);opacity:0}}
+/* ---- headings, lava rivers ---- */
+h2{font:clamp(3rem,7vw,6rem) 'Pirata One';color:#ff5a1f;text-shadow:0 0 24px #ff2a0088,0 4px 0 #1a0200;margin-bottom:1rem}
+h2+.lead{margin-top:.2rem}
+.lead{max-width:44ch;font-size:1.5rem;margin-bottom:2rem}.stats{display:flex;gap:3rem;flex-wrap:wrap}
+.stats div{font-size:1.1rem}.stats b{display:block;font:4rem 'Pirata One';color:#ffb347}
+.river{height:34px;margin:0 -8vw;position:relative;z-index:2;background:linear-gradient(90deg,#2a0300,#e0300a,#ff9d1a,#e0300a,#2a0300) 0 0/300% 100%;opacity:.5;animation:flow 9s linear infinite;
+clip-path:polygon(0 40%,8% 20%,17% 55%,29% 15%,41% 60%,53% 25%,66% 65%,78% 20%,90% 55%,100% 30%,100% 75%,88% 95%,74% 60%,60% 100%,47% 70%,33% 95%,20% 65%,9% 100%,0 80%)}
+@keyframes flow{to{background-position:300% 0}}
+/* ---- rocks (events) ---- */
+.tabs{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem}
+.tabs button{font:700 1rem Rajdhani;letter-spacing:.12em;text-transform:uppercase;color:#d9b8a6;padding:.6rem 1.4rem;border:0;cursor:none;background:#2a2220;clip-path:polygon(6% 0,100% 8%,94% 100%,0 90%);transition:.2s}
+.tabs button.on,.tabs button:hover{color:#fff;background:radial-gradient(circle at 50% 120%,#ff7a1a,#9a1408 70%)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.6rem}
+.rock{padding:3.6rem 1.8rem 1.6rem;min-height:240px;display:flex;flex-direction:column;position:relative;isolation:isolate;overflow:hidden;--crk:#1d1816;
+background:radial-gradient(ellipse at 25% 18%,#ffffff26,transparent 55%),linear-gradient(145deg,#867d76,#58504b 55%,#352e2b);
+clip-path:polygon(0 8%,12% 0,88% 3%,100% 15%,97% 90%,85% 100%,10% 97%,2% 82%);box-shadow:inset 3px 3px 0 #c2b8afaa,inset -4px -4px 0 #0006,inset 0 0 0 1px #1d1816;transition:transform .3s}
+.rock:nth-child(3n+2){clip-path:polygon(2% 4%,30% 0,70% 5%,100% 0,98% 70%,92% 100%,40% 94%,5% 100%,0 60%);background:radial-gradient(ellipse at 25% 18%,#ffffff26,transparent 55%),linear-gradient(145deg,#a8957d,#74634f 55%,#4b3f33)}
+.rock:nth-child(3n){clip-path:polygon(0 0,60% 6%,96% 2%,100% 40%,95% 96%,55% 100%,14% 93%,3% 70%);background:radial-gradient(ellipse at 25% 18%,#ffffff22,transparent 55%),linear-gradient(145deg,#6e7780,#4b535b 55%,#2f353a)}
+.rock::before{content:"";position:absolute;left:0;right:0;top:0;height:30%;z-index:-1;transform-origin:top;transition:height .5s ease-out;
+background:linear-gradient(#ffe27a,#ff8a1a 35%,#d3260a 75%,#8a1004);clip-path:polygon(0 0,100% 0,100% 45%,93% 72%,87% 40%,79% 88%,69% 46%,59% 68%,49% 34%,39% 92%,29% 50%,19% 78%,9% 42%,0 62%)}
+.rock::after{content:"";position:absolute;inset:0;z-index:-1;transition:--crk .3s;
+background:linear-gradient(103deg,transparent 40%,var(--crk) 41%,transparent 42.5%),linear-gradient(77deg,transparent 66%,var(--crk) 67%,transparent 68.5%),linear-gradient(130deg,transparent 84%,var(--crk) 85%,transparent 86.5%)}
+.rock:hover{--crk:#ff9a2a;transform:translateY(-10px) rotate(.8deg)}.rock:hover::before{height:46%}
+.rock.off{display:none}.rock.in{animation:rise .6s both}@keyframes rise{from{transform:translateY(30px) scale(.96);opacity:0}}
+.rock h3{font:2rem 'Pirata One';color:#ff9d3d;line-height:1.1}.rock p{text-shadow:0 1px 0 #000;flex:1;margin:.5rem 0 1rem;font-size:1.1rem}
+.rock small{font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;color:#d9a58a}.rock em{font-style:normal;position:absolute;top:.7rem;right:1.4rem;font:1.2rem 'Pirata One';color:#fff;text-shadow:0 2px 0 #5a0a00}
+/* ---- schedule ---- */
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.6rem}
+.day{padding:2rem;background:linear-gradient(#2c2321,#140f0e);clip-path:polygon(0 4%,50% 0,100% 5%,98% 100%,48% 97%,2% 100%);position:relative;border-top:3px solid #ff5a1f}
+.day h3{font:2.3rem 'Pirata One';color:#ff7a3d}.day h3 span{font-size:1.1rem;color:#d9a58a;margin-left:.6rem;font-family:Rajdhani}
+.day ul{list-style:none;padding:0;margin-top:1rem}.day li{padding:.55rem 0 .55rem 1.6rem;border-bottom:1px solid #ff3b0033;position:relative}
+.day li::before{content:"";position:absolute;left:0;top:1.05rem;width:9px;height:9px;background:#ff6a1a;transform:rotate(45deg);box-shadow:0 0 10px #ff3b00}.day b{color:#ffb347}
+/* ---- prizes ---- */
+.prizes{display:flex;gap:1.6rem;flex-wrap:wrap;align-items:flex-end}
+.prize{flex:1 1 230px;padding:2rem;text-align:center;background:radial-gradient(circle at 50% 0,#5a4a42,#1a1412 75%);clip-path:polygon(4% 0,96% 3%,100% 100%,0 100%)}
+.prize.first{padding-bottom:4rem;background:radial-gradient(circle at 50% 0,#8a3a14,#2a0a05 80%)}.prize.third{padding-bottom:1.2rem}
+.prize b{display:block;font:3.4rem 'Pirata One';color:#ffb347}.prize span{letter-spacing:.2em;text-transform:uppercase;font-size:1rem}
+/* ---- faq ---- */
+details{max-width:760px;margin-bottom:.9rem;background:#1b1412;padding:1rem 1.4rem;clip-path:polygon(0 0,98% 4%,100% 100%,2% 96%);border-left:3px solid #ff5a1f}
+summary{font:1.5rem 'Pirata One';color:#ff9d3d;cursor:none;list-style:none}summary::-webkit-details-marker{display:none}details p{margin-top:.6rem}
+.contact{margin-top:2.2rem;font-size:1.15rem;opacity:.85}
+footer{padding:3rem 2rem;text-align:center;opacity:.7;}
+@media(max-width:700px){body,a,summary,.tabs button{cursor:auto}#glow{display:none}nav a{display:none}section{padding:6rem 6vw}.river{margin:0 -6vw}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+/* stone finish for the remaining panels (flat, no grain) */
+.cd div{background:linear-gradient(145deg,#756c66,#3b3430);border:0;box-shadow:inset 2px 2px 0 #cfc5bc88,inset -3px -3px 0 #0006,inset 0 -4px 14px #ff3b0044}
+.tabs button{background:linear-gradient(145deg,#8a8078,#4a423d);box-shadow:inset 2px 2px 0 #cfc5bc88,inset -2px -2px 0 #0006}
+.day{background:linear-gradient(160deg,#4c433e,#211a18)}details{background:linear-gradient(160deg,#3f3733,#1b1412)}
+.prize{background:linear-gradient(160deg,#6a6059,#2a2321)}
+/* crazy mode: tilt, jitter, heat flicker */
+.rock:hover{transform:perspective(700px) translateY(-12px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+.stone:hover{animation:jit .12s infinite}@keyframes jit{25%{translate:1.5px -1px}75%{translate:-1.5px 1px}}
+h2{transition:text-shadow .3s}h2:hover{animation:heat .18s infinite;text-shadow:0 0 40px #ff5a00,0 0 90px #ff2a00}
+@keyframes heat{25%{transform:translate(2px,-1px) skewX(2deg)}75%{transform:translate(-2px,1px) skewX(-2deg)}}
+.stats b{transition:transform .2s,text-shadow .2s}.stats div:hover b{transform:scale(1.18);text-shadow:0 0 30px #ff5a00}
+/* performance fixes: rocks ooze only on hover, rivers animate on the compositor only */
+.rock:hover::before{animation:ooze 1.2s ease-in-out infinite}
+.river{animation:none;background:none;overflow:hidden}
+.river::before{content:"";position:absolute;top:0;bottom:0;left:0;width:300%;background:linear-gradient(90deg,#2a0300,#e0300a,#ff9d1a,#e0300a,#2a0300,#e0300a,#ff9d1a,#e0300a,#2a0300);animation:flow2 14s linear infinite}
+@keyframes flow2{to{transform:translateX(-66.66%)}}
+/* the click screen-shake moves <body>, which drags the fixed dragon canvases away; cancel it (important beats animations) */
+body{translate:none!important}
